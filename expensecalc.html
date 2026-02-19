@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Expense Tracker</title>
+		<style>
+			table {
+				border-collapse: collapse;
+			}
+			th,
+			td {
+				border: 1px solid;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" id="expenseInput" placeholder="Expense Name" />
+		<input type="number" id="priceInput" placeholder="Amount" />
+		<select id="categoryInput">
+			<option value="N/A">Select Category</option>
+			<option value="Food">Food</option>
+			<option value="Transport">Transport</option>
+			<option value="Entertainment">Entertainment</option>
+			<option value="Other">Other</option>
+		</select>
+		<button onclick="addItem()">Add Expense</button>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Expense Name</th>
+						<th>Amount</th>
+						<th>Category</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="itemList"></tbody>
+			</table>
+		</div>
+		<script>
+			const display = document.getElementById("itemList");
+			const items = [];
+
+			function addItem() {
+				items.unshift({
+					name: document.getElementById("expenseInput").value,
+					cost: document.getElementById("priceInput").value,
+					category: document.getElementById("categoryInput").value,
+				});
+				updateList();
+			}
+			function updateList() {
+				display.innerHTML = "";
+				for (let i = 0; i < items.length; i++) {
+					display.innerHTML += `<tr><td>${items[i].name}</td><td>${items[i].cost}</td><td>${items[i].category}</td><td><button onclick="editExpence(${i})">Edit</button><button onclick="deleteExpence(${i})">Delete</button></tr>`;
+				}
+			}
+			function editExpence(index) {
+				items[index].name = prompt("Expence Name:", items[index].name);
+				items[index].cost = prompt("Amount:", items[index].cost);
+				items[index].category = prompt("Category (Food/Transport/Entertainment/Other):",items[index].category,);
+				updateList();
+			}
+			function deleteExpence(index) {
+				items.splice(index,1)
+				updateList();
+			}
+		</script>
+	</body>
+</html>
