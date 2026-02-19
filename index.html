@@ -38,9 +38,11 @@
 				<tbody id="itemList"></tbody>
 			</table>
 		</div>
+		<p><b>Total Expence:</b><span id="totalExpense"></span></p>
 		<script>
 			const display = document.getElementById("itemList");
 			const items = [];
+			totalPrice = 0;
 
 			function addItem() {
 				items.unshift({
@@ -55,6 +57,11 @@
 				for (let i = 0; i < items.length; i++) {
 					display.innerHTML += `<tr><td>${items[i].name}</td><td>${items[i].cost}</td><td>${items[i].category}</td><td><button onclick="editExpence(${i})">Edit</button><button onclick="deleteExpence(${i})">Delete</button></tr>`;
 				}
+				totalPrice = 0;
+				for (let i = 0; i < items.length; i++) {
+					totalPrice += parseInt(items[i].cost)
+				}
+				document.getElementById("totalExpense").innerHTML = " $" + totalPrice
 			}
 			function editExpence(index) {
 				items[index].name = prompt("Expence Name:", items[index].name);
@@ -66,6 +73,7 @@
 				items.splice(index,1)
 				updateList();
 			}
+			updateList()
 		</script>
 	</body>
 </html>
